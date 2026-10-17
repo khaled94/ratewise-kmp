@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Two opposing arrows (exchange). Everything stays inside the 66dp safe zone (21..87). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Top arrow, points right -->
+    <path
+        android:pathData="M32,42 L74,42 M63,31 L74,42 L63,53"
+        android:strokeWidth="6.5"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <!-- Bottom arrow, points left -->
+    <path
+        android:pathData="M76,66 L34,66 M45,55 L34,66 L45,77"
+        android:strokeWidth="6.5"
+        android:strokeColor="#FF34D399"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

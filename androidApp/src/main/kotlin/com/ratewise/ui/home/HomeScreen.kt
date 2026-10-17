@@ -12,8 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -26,11 +24,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ratewise.ui.components.CurrencyAvatar
 import com.ratewise.ui.components.CurrencyListItem
+import com.ratewise.ui.components.HeroCard
 import com.ratewise.ui.components.MessageState
 import com.ratewise.ui.components.ScreenTitle
 import com.ratewise.ui.components.SearchField
@@ -96,24 +96,18 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
 @Composable
 private fun BaseCurrencyCard(base: String, baseName: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-    ) {
+    HeroCard(Modifier.padding(horizontal = 16.dp)) {
         Row(
-            modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             CurrencyAvatar(base)
             Column {
-                Text("1 $base equals", style = MaterialTheme.typography.titleMedium)
+                Text("1 $base equals", style = MaterialTheme.typography.titleLarge)
                 Text(
                     "$baseName - change in Settings",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = Color.White.copy(alpha = 0.75f),
                 )
             }
         }

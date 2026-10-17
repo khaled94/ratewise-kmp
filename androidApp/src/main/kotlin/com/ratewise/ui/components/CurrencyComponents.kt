@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,8 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
@@ -39,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ratewise.shared.domain.model.Currency
+import com.ratewise.ui.theme.HeroGradient
 
 /** Turns a currency code such as "EUR" into a flag emoji from its first two letters. */
 fun flagEmoji(code: String): String {
@@ -59,6 +63,29 @@ fun CurrencyAvatar(code: String, modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center,
     ) {
         Text(flagEmoji(code), style = MaterialTheme.typography.titleLarge)
+    }
+}
+
+/** Brand gradient card used for the headline figure on a screen. */
+@Composable
+fun HeroCard(
+    modifier: Modifier = Modifier,
+    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent, contentColor = Color.White),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(HeroGradient)
+                .padding(20.dp),
+            horizontalAlignment = horizontalAlignment,
+            content = content,
+        )
     }
 }
 

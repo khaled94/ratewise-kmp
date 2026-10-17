@@ -1,3 +1,5 @@
 <resources>
-    <style name="Theme.RateWise" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.RateWise" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/brand_navy</item>
+    </style>
 </resources>

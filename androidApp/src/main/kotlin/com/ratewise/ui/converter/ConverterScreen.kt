@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
@@ -25,12 +26,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ratewise.ui.components.CurrencyAvatar
 import com.ratewise.ui.components.CurrencyPickerDialog
+import com.ratewise.ui.components.HeroCard
+import com.ratewise.ui.theme.BrandEmerald
 import com.ratewise.ui.components.ScreenTitle
 import com.ratewise.ui.components.formatRate
 
@@ -111,37 +115,35 @@ private fun CurrencySelector(label: String, code: String, onClick: () -> Unit) {
 
 @Composable
 private fun ResultCard(state: ConverterUiState, onRetry: () -> Unit) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-    ) {
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            val result = state.result
-            when {
-                state.error != null -> {
-                    Text(state.error, style = MaterialTheme.typography.bodyMedium)
-                    TextButton(onClick = onRetry) { Text("Retry") }
-                }
-                state.isLoading -> CircularProgressIndicator()
-                result == null -> Text("Enter an amount to convert", style = MaterialTheme.typography.bodyLarge)
-                else -> {
-                    Text("${state.amount} ${state.from} =", style = MaterialTheme.typography.bodyLarge)
+    HeroCard(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        val result = state.result
+        when {
+            state.error != null -> {
+                Text(state.error, style = MaterialTheme.typography.bodyMedium)
+                TextButton(
+                    onClick = onRetry,
+                    colors = ButtonDefaults.textButtonColors(contentColor = BrandEmerald),
+                ) { Text("Retry") }
+            }
+            state.isLoading -> CircularProgressIndicator(color = BrandEmerald, modifier = Modifier.padding(8.dp))
+            result == null -> Text("Enter an amount to convert", style = MaterialTheme.typography.bodyLarge)
+            else -> {
+                Text(
+                    "${state.amount} ${state.from} =",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.White.copy(alpha = 0.75f),
+                )
+                Text(
+                    "${formatRate(result)} ${state.to}",
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(vertical = 8.dp),
+                )
+                state.unitRate?.let {
                     Text(
-                        "${formatRate(result)} ${state.to}",
-                        style = MaterialTheme.typography.headlineLarge,
-                        modifier = Modifier.padding(vertical = 8.dp),
+                        "1 ${state.from} = ${formatRate(it)} ${state.to}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = BrandEmerald,
                     )
-                    state.unitRate?.let {
-                        Text(
-                            "1 ${state.from} = ${formatRate(it)} ${state.to}",
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    }
                 }
             }
         }
