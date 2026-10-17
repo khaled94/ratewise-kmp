@@ -1,5 +1,6 @@
 package com.ratewise.shared.domain.usecase
 
+import com.ratewise.shared.domain.model.Currency
 import com.ratewise.shared.domain.model.ExchangeRate
 import com.ratewise.shared.domain.repository.CurrencyRepository
 import kotlinx.coroutines.flow.Flow
@@ -9,6 +10,8 @@ class FakeCurrencyRepository(
     private val rates: List<ExchangeRate> = emptyList(),
 ) : CurrencyRepository {
     private val favorites = MutableStateFlow<List<String>>(emptyList())
+
+    override suspend fun getCurrencies(): List<Currency> = emptyList()
 
     override suspend fun getRates(base: String): List<ExchangeRate> = rates.filter { it.base == base }
 

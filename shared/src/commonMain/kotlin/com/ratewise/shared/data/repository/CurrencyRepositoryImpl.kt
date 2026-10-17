@@ -3,6 +3,7 @@ package com.ratewise.shared.data.repository
 import com.ratewise.shared.data.local.FavoriteCurrencyDao
 import com.ratewise.shared.data.local.FavoriteCurrencyEntity
 import com.ratewise.shared.data.remote.CurrencyApiService
+import com.ratewise.shared.domain.model.Currency
 import com.ratewise.shared.domain.model.ExchangeRate
 import com.ratewise.shared.domain.repository.CurrencyRepository
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +12,14 @@ class CurrencyRepositoryImpl(
     private val api: CurrencyApiService,
     private val favoriteDao: FavoriteCurrencyDao,
 ) : CurrencyRepository {
+
+    private var currencies: List<Currency>? = null
+
+    override suspend fun getCurrencies(): List<Currency> =
+        currencies ?: api.getCurrencies()
+            .map { (code, name) -> Currency(code = code, name = name) }
+            .sortedBy { it.code }
+            .also { currencies = it }
 
     override suspend fun getRates(base: String): List<ExchangeRate> =
         api.getLatestRates(base).rates.map { (target, rate) ->

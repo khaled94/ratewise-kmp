@@ -10,6 +10,9 @@ class CurrencyApiService(private val client: HttpClient) {
     suspend fun getLatestRates(base: String): RatesResponse =
         client.get("$BASE_URL/latest") { parameter("from", base) }.body()
 
+    suspend fun getCurrencies(): Map<String, String> =
+        client.get("$BASE_URL/currencies").body()
+
     private companion object {
         const val BASE_URL = "https://api.frankfurter.app"
     }
